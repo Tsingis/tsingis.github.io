@@ -1,0 +1,59 @@
+:root {
+    --background-color: #333;
+    --text-color: #f4f4f4;
+    --hover-color: #007bff;
+    font-family: Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--background-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+}
+
+.title {
+    font-size: 36px;
+    margin-bottom: 0px;
+}
+
+.subtitle {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.aka {
+    vertical-align: super;
+    font-size: 0.4em;
+}
+
+.about {
+    font-size: 16px;
+    margin: 20px 0 10px 0;
+}
+
+.icon-link {
+    text-decoration: none;
+}
+
+.icon {
+    display: inline-block;
+    color: var(--text-color);
+    font-size: 36px;
+    margin: 0 10px;
+    width: 36px;
+    vertical-align: middle;
+    transition: color 0.3s ease;
+}
+
+.icon:hover, .icon:focus {
+    color: var(--hover-color);
+    transform: translateY(-5px);
+}
