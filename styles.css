@@ -10,13 +10,16 @@ body {
     background-color: var(--background-color);
     color: var(--text-color);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: top;
     align-items: center;
+    height: 100vh;
     margin: 0;
 }
 
 .container {
     text-align: center;
+    margin-bottom: 20px;
 }
 
 .title {
@@ -56,4 +59,33 @@ body {
 .icon:hover, .icon:focus {
     color: var(--hover-color);
     transform: translateY(-5px);
+}
+
+.output-container {
+    background-color: var(--background-color);
+    padding: 20px;
+    text-align: center;
+}
+
+.output-title {
+    font-size: 20px;
+    padding: 20px;
+}
+
+.output-question {
+    font-style: italic;
+    max-width: 500px;
+    margin-bottom: 10px;
+}
+
+.output-options {
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+.output-answer {
+    font-size: 0.9em;
+    padding: 20px;
+    width: 300px;
+    margin: 0 auto;
 }
