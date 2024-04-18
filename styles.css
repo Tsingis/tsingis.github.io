@@ -1,91 +1,98 @@
 :root {
-    --background-color: #333;
-    --text-color: #f4f4f4;
-    --hover-color: #007bff;
-    font-family: Arial, sans-serif;
-    box-sizing: border-box;
+  --background-color: #333;
+  --text-color: #f4f4f4;
+  --hover-color: #007bff;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
 }
 
 body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    display: flex;
-    flex-direction: column;
-    justify-content: top;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: top;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
 }
 
 .container {
-    text-align: center;
-    margin-bottom: 20px;
+  text-align: center;
+  margin-bottom: 20px;
 }
 
 .title {
-    font-size: 36px;
-    margin-bottom: 0px;
+  font-size: 36px;
+  margin-bottom: 0px;
 }
 
 .subtitle {
-    font-size: 24px;
-    margin-bottom: 20px;
+  font-size: 24px;
+  margin-bottom: 20px;
 }
 
 .aka {
-    vertical-align: super;
-    font-size: 0.4em;
+  vertical-align: super;
+  font-size: 0.4em;
 }
 
 .about {
-    font-size: 16px;
-    margin: 20px 0 10px 0;
+  font-size: 16px;
+  margin: 20px 0 10px 0;
 }
 
 .icon-link {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .icon {
-    display: inline-block;
-    color: var(--text-color);
-    font-size: 36px;
-    margin: 0 10px;
-    width: 36px;
-    vertical-align: middle;
-    transition: color 0.3s ease;
+  display: inline-block;
+  color: var(--text-color);
+  font-size: 36px;
+  margin: 0 10px;
+  width: 36px;
+  vertical-align: middle;
+  transition: scale 0.3s ease;
 }
 
-.icon:hover, .icon:focus {
-    color: var(--hover-color);
-    transform: translateY(-5px);
+.icon:hover,
+.icon:focus,
+.icon:active {
+  transform: scale(0.9);
 }
 
 .output-container {
-    background-color: var(--background-color);
-    padding: 20px;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--background-color);
+  padding: 20px;
+  text-align: center;
 }
 
 .output-title {
-    font-size: 20px;
-    padding: 20px;
+  font-size: 20px;
+  padding: 20px;
 }
 
 .output-question {
-    font-style: italic;
-    max-width: 500px;
-    margin-bottom: 10px;
+  font-style: italic;
+  max-width: 500px;
+  margin-bottom: 10px;
 }
 
 .output-options {
-    font-style: italic;
-    font-size: 0.9em;
+  font-style: italic;
+  font-size: 0.9em;
+  margin: 10px auto;
 }
 
 .output-answer {
-    font-size: 0.9em;
-    padding: 20px;
-    width: 300px;
-    margin: 0 auto;
+  display: table;
+  font-size: 0.9em;
+  min-width: 50px;
+  max-width: 200px;
+  padding: 10px;
 }
