@@ -15,21 +15,22 @@ body {
   align-items: center;
   height: 100vh;
   margin: 0;
+  padding: 0;
+  overflow: hidden;
 }
 
-.container {
+.info-container {
   text-align: center;
-  margin-bottom: 20px;
 }
 
 .title {
   font-size: 36px;
-  margin-bottom: 0px;
+  margin: 15px 0 0 0;
 }
 
 .subtitle {
-  font-size: 24px;
-  margin-bottom: 20px;
+  font-size: 20px;
+  margin: 0 0 25px 0;
 }
 
 .aka {
@@ -37,9 +38,12 @@ body {
   font-size: 0.4em;
 }
 
-.about {
+.icon-title {
   font-size: 16px;
-  margin: 20px 0 10px 0;
+}
+
+.icon-container {
+  margin: 10px 0 25px 0;
 }
 
 .icon-link {
@@ -68,8 +72,9 @@ body {
   justify-content: center;
   align-items: center;
   background-color: var(--background-color);
-  padding: 20px;
   text-align: center;
+  padding: 10px;
+  margin: 0;
 }
 
 .output-title {
