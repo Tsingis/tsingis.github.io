@@ -1,7 +1,6 @@
 :root {
   --background-color: #333;
   --text-color: #f4f4f4;
-  --hover-color: #007bff;
   font-family: Arial, sans-serif;
   box-sizing: border-box;
 }
@@ -9,14 +8,18 @@
 body {
   background-color: var(--background-color);
   color: var(--text-color);
-  display: flex;
-  flex-direction: column;
-  justify-content: top;
-  align-items: center;
-  height: 100vh;
   margin: 0;
   padding: 0;
   overflow: hidden;
+  overscroll-behavior: auto;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: center;
+  height: 100vh;
 }
 
 .info-container {
@@ -71,7 +74,6 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: var(--background-color);
   text-align: center;
   padding: 10px;
   margin: 0;

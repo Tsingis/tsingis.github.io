@@ -6,9 +6,7 @@ const optionsElem = document.querySelector(".output-options");
 const answerElem = document.querySelector(".output-answer");
 const loadingElem = document.querySelector(".output-loading")
 
-document.addEventListener("DOMContentLoaded", () => {
-  fetchTrivia();
-});
+document.addEventListener("DOMContentLoaded", fetchTrivia);
 
 function fetchTrivia() {
   fetch("https://opentdb.com/api.php?amount=1")
