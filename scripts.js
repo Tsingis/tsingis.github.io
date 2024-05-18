@@ -1,4 +1,5 @@
 let answer = "";
+let isTouchingAnswer = false;
 const showText = "Show answer";
 
 const questionElem = document.querySelector(".output-question");
@@ -6,16 +7,15 @@ const optionsElem = document.querySelector(".output-options");
 const answerElem = document.querySelector(".output-answer");
 const loadingElem = document.querySelector(".output-loading");
 
-let isTouchingAnswer = false;
 
 document.addEventListener("DOMContentLoaded", () => {
   answerElem.addEventListener("click", toggleAnswer);
   answerElem.addEventListener("mouseover", showAnswer);
   answerElem.addEventListener("mouseleave", resetAnswer);
   answerElem.addEventListener("touchstart", handleAnswerTouchStart, { passive: true });
-  answerElem.addEventListener("touchend", handleAnswerTouchEnd, { passive: true });
+  answerElem.addEventListener("touchend", handleAnswerTouchEnd);
 
-  document.addEventListener("touchmove", handleTouchMove, { passive: true });
+  document.addEventListener("touchmove", handleTouchMove);
 
   setTrivia();
 });
@@ -83,8 +83,7 @@ function resetAnswer() {
   answerElem.innerText = showText;
 }
 
-function toggleAnswer(e) {
-  e.preventDefault();
+function toggleAnswer() {
   if (answerElem.classList.contains("active")) {
     answerElem.classList.remove("active");
     answerElem.innerText = showText;

@@ -8,7 +8,6 @@
 body {
   margin: 0;
   padding: 0;
-  overflow-y: hidden;
   overscroll-behavior: auto;
   background-color: var(--background-color);
   color: var(--text-color);
@@ -19,14 +18,21 @@ body {
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  margin-top: 5%;
+  height: 100%;
   background-image: url("images/buzzwords.svg");
   background-position: center top;
   background-size: contain;
-  background-repeat: no-repeat;
+  background-repeat: repeat-y;
   opacity: 0.025;
   z-index: -1;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 25%;
 }
 
 .info-container {
@@ -34,12 +40,12 @@ body {
 }
 
 .title {
-  font-size: 36px;
+  font-size: 42px;
   margin: 15px 0 0 0;
 }
 
 .subtitle {
-  font-size: 20px;
+  font-size: 24px;
   margin: 0 0 25px 0;
 }
 
@@ -49,7 +55,7 @@ body {
 }
 
 .icon-title {
-  font-size: 16px;
+  font-size: 18px;
 }
 
 .icon-container {
@@ -87,25 +93,26 @@ body {
 }
 
 .output-title {
-  font-size: 20px;
+  font-size: 22px;
   padding: 20px;
 }
 
 .output-question {
   font-style: italic;
+  font-size: 20px;
   max-width: 500px;
   margin-bottom: 10px;
 }
 
 .output-options {
   font-style: italic;
-  font-size: 0.9em;
+  font-size: 16px;
   margin: 10px auto;
 }
 
 .output-answer {
   display: table;
-  font-size: 0.9em;
+  font-size: 16px;
   min-width: 50px;
   max-width: 200px;
   padding: 10px;
