@@ -1,0 +1,14 @@
+C#
+.NET
+SQL Server
+Python
+AWS
+Azure
+Docker
+Jenkins
+Azure DevOps
+Github Actions
+Git
+Jira
+JavaScript
+TypeScript

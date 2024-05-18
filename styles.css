@@ -6,20 +6,27 @@
 }
 
 body {
-  background-color: var(--background-color);
-  color: var(--text-color);
   margin: 0;
   padding: 0;
   overflow: hidden;
   overscroll-behavior: auto;
+  background-color: var(--background-color);
+  color: var(--text-color);
 }
 
-.content {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  align-items: center;
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
   height: 100vh;
+  margin-top: 5%;
+  background-image: url("images/buzzwords.svg");
+  background-position: center top;
+  background-size: contain;
+  background-repeat: no-repeat;
+  opacity: 0.025;
+  z-index: -1;
 }
 
 .info-container {
