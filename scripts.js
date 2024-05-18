@@ -2,11 +2,10 @@ let answer = "";
 let isTouchingAnswer = false;
 const showText = "Show answer";
 
-const questionElem = document.querySelector(".output-question");
-const optionsElem = document.querySelector(".output-options");
-const answerElem = document.querySelector(".output-answer");
-const loadingElem = document.querySelector(".output-loading");
-
+const questionElem = document.querySelector(".question");
+const optionsGridElem = document.querySelector(".question-options-grid");
+const answerElem = document.querySelector(".question-answer");
+const loadingElem = document.querySelector(".question-loading");
 
 document.addEventListener("DOMContentLoaded", () => {
   answerElem.addEventListener("click", toggleAnswer);
@@ -50,7 +49,7 @@ function setTrivia() {
       let options = results.incorrect_answers;
       options.push(correct);
       answer = correct;
-      optionsElem.innerText = decodeHTML(formatOptions(options, results.type));
+      formatOptions(options, results.type);
       questionElem.innerText = decodeHTML(results.question);
       answerElem.innerText = showText;
     })
@@ -65,8 +64,28 @@ function formatOptions(options, type) {
   if (type === "boolean") {
     options.reverse();
   }
-  const joined = options.slice(0, -1).join(", ");
-  return joined + " or " + options.slice(-1);
+  
+  let counter = 0;
+  for (let i = 0; i < options.length; i++) {
+    if (counter % 2 === 0) {
+      var row = document.createElement("div");
+      row.classList.add("row");
+      optionsGridElem.appendChild(row);
+    }
+
+    const column = document.createElement("div");
+    column.classList.add("column");
+    column.textContent = `${String.fromCharCode(i + 65)})`;
+    
+    const option = document.createElement("span");
+    option.textContent = decodeHTML(options[i]);
+    
+    column.appendChild(option);
+    row.appendChild(column);    
+    counter++;
+
+    optionsGridElem.appendChild(row);
+  }
 }
 
 function decodeHTML(html) {
