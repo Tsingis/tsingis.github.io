@@ -20,12 +20,20 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Create temp directory
+        run: mkdir -p temp/images
+      - name: Copy required files
+        run: |
+          cp index.html temp/
+          cp scripts.js temp/
+          cp styles.css temp/
+          cp -r images/* temp/images/
       - name: Setup Pages
         uses: actions/configure-pages@v5
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "."
+          path: temp
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
