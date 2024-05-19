@@ -1,11 +1,15 @@
-let answer = "";
-let isTouchingAnswer = false;
+const triviasAmount = 10;
 const showText = "Show answer";
 
-const questionElem = document.querySelector(".question");
-const optionsGridElem = document.querySelector(".question-options-grid");
-const answerElem = document.querySelector(".question-answer");
-const loadingElem = document.querySelector(".question-loading");
+let answer = "";
+let isTouchingAnswer = false;
+let trivias = []
+let triviaIndex = 0;
+
+const questionElem = document.querySelector(".trivia-question");
+const optionsGridElem = document.querySelector(".trivia-options-grid");
+const answerElem = document.querySelector(".trivia-answer");
+const loadingElem = document.querySelector(".trivia-loading");
 
 document.addEventListener("DOMContentLoaded", () => {
   answerElem.addEventListener("click", toggleAnswer);
@@ -16,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   document.addEventListener("touchmove", handleTouchMove);
 
-  setTrivia();
+  fetchTrivia()
 });
 
 function handleAnswerTouchStart(event) {
@@ -39,24 +43,53 @@ function handleTouchMove(event) {
   }
 }
 
-function setTrivia() {
-  fetch("https://opentdb.com/api.php?amount=1")
+function fetchTrivia() {
+  fetch(`https://opentdb.com/api.php?amount=${triviasAmount}`)
     .then((response) => response.json())
     .then((data) => {
+      data.results.forEach((result) => {
+        let options = result.incorrect_answers;
+        options.push(result.correct_answer);
+        let trivia = {
+          question: result.question,
+          type: result.type,
+          correct: result.correct_answer,
+          options: options,
+        };
+        trivias.push(trivia);
+      })
       loadingElem.style.display = "none";
-      let results = data.results[0];
-      let correct = results.correct_answer;
-      let options = results.incorrect_answers;
-      options.push(correct);
-      answer = correct;
-      formatOptions(options, results.type);
-      questionElem.innerText = decodeHTML(results.question);
-      answerElem.innerText = showText;
+      setTrivia();
     })
     .catch((error) => {
       loadingElem.style.display = "block";
-      setTimeout(setTrivia, 2000);
+      setTimeout(fetchTrivia, 2000);
     });
+}
+
+function setTrivia() {
+  resetTrivia();
+  if (loadingElem.style.display == "block") {
+    return;
+  }
+  if (triviaIndex === triviasAmount) {
+    loadingElem.style.display = "block"
+    triviaIndex = 0;
+    fetchTrivia();
+  } else {
+    let trivia = trivias[triviaIndex];
+    answer = trivia.correct;
+    formatOptions(trivia.options, trivia.type);
+    questionElem.innerText = decodeHTML(trivia.question);
+    answerElem.innerText = showText;
+    triviaIndex++;
+  }
+}
+
+function resetTrivia() {
+  questionElem.innerText = "";
+  answerElem.innerText = "";
+  optionsGridElem.innerHTML = "";
 }
 
 function formatOptions(options, type) {
