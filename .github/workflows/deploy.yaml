@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - main
+    paths:
+      - "**"
+      - "!.github/**"
+      - ".github/workflows/deploy.yaml"
+      - "!util/**"
+      - "!.gitignore"
   workflow_dispatch:
 permissions:
   contents: read
