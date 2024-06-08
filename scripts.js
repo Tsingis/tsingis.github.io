@@ -47,6 +47,7 @@ function fetchTrivia() {
   fetch(`https://opentdb.com/api.php?amount=${triviasAmount}`)
     .then((response) => response.json())
     .then((data) => {
+      trivias = []
       data.results.forEach((result) => {
         let options = result.incorrect_answers;
         options.push(result.correct_answer);
