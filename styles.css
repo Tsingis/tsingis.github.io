@@ -73,7 +73,6 @@ body {
   margin: 0 10px;
   width: 36px;
   vertical-align: middle;
-  transition: scale 0.3s ease;
 }
 
 .icon:hover,
@@ -113,7 +112,6 @@ body {
   .trivia-button:hover {
     background-color: var(--background-color) !important;
     color: var(--text-color) !important;
-    transform: scale(0.9) 0.3s;
   }
   
   .trivia-button {
@@ -130,7 +128,6 @@ body {
 .trivia-button:hover
 span {
   transform: scale(0.975);
-  transition: transform 0.05s ease;
 }
 
 .trivia-question {

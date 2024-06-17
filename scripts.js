@@ -17,9 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
   answerElem.addEventListener("mouseleave", resetAnswer);
   answerElem.addEventListener("touchstart", handleAnswerTouchStart, { passive: true });
   answerElem.addEventListener("touchend", handleAnswerTouchEnd);
-
   document.addEventListener("touchmove", handleTouchMove);
-
   fetchTrivia()
 });
 
@@ -44,10 +42,12 @@ function handleTouchMove(event) {
 }
 
 function fetchTrivia() {
+  setLoading(true);
   fetch(`https://opentdb.com/api.php?amount=${triviasAmount}`)
     .then((response) => response.json())
     .then((data) => {
       trivias = []
+      triviaIndex = 0;
       data.results.forEach((result) => {
         let options = result.incorrect_answers;
         options.push(result.correct_answer);
@@ -59,23 +59,29 @@ function fetchTrivia() {
         };
         trivias.push(trivia);
       })
-      loadingElem.style.display = "none";
+      setLoading(false);
       setTrivia();
     })
     .catch((error) => {
-      loadingElem.style.display = "block";
+      setLoading(true);
       setTimeout(fetchTrivia, 2000);
     });
 }
 
+function setLoading(loading) {
+  loadingElem.style.display = loading ? "block" : "none";
+}
+
+function isLoading() {
+  return loadingElem.style.display === "block";
+}
+
 function setTrivia() {
   resetTrivia();
-  if (loadingElem.style.display == "block") {
+  if (isLoading()) {
     return;
   }
   if (triviaIndex === triviasAmount) {
-    loadingElem.style.display = "block"
-    triviaIndex = 0;
     fetchTrivia();
   } else {
     let trivia = trivias[triviaIndex];
@@ -129,19 +135,25 @@ function decodeHTML(html) {
 }
 
 function showAnswer() {
-  answerElem.innerText = decodeHTML(answer);
+  if (!isLoading()) {
+    answerElem.innerText = decodeHTML(answer);
+  }
 }
 
 function resetAnswer() {
-  answerElem.innerText = showText;
+  if (!isLoading()) {
+    answerElem.innerText = showText;
+  }
 }
 
 function toggleAnswer() {
-  if (answerElem.classList.contains("active")) {
-    answerElem.classList.remove("active");
-    answerElem.innerText = showText;
-  } else {
-    answerElem.classList.add("active");
-    answerElem.innerText = decodeHTML(answer);
+  if (!isLoading()) {
+    if (answerElem.classList.contains("active")) {
+      answerElem.classList.remove("active");
+      answerElem.innerText = showText;
+    } else {
+      answerElem.classList.add("active");
+      answerElem.innerText = decodeHTML(answer);
+    }
   }
 }
