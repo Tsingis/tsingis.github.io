@@ -4,11 +4,11 @@ on:
     branches:
       - main
     paths:
-      - "**"
-      - "!.github/**"
+      - "images/**"
+      - "index.html"
+      - "scripts.js"
+      - "styles.css"
       - ".github/workflows/deploy.yaml"
-      - "!util/**"
-      - "!.gitignore"
   workflow_dispatch:
 permissions:
   contents: read
