@@ -1,0 +1,15 @@
+name: health
+on:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup
+        run: chmod +x ./health-check.sh
+      - name: Health check
+        run: ./health-check.sh "https://jessekela.com" "Jesse Kela"
