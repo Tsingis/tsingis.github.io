@@ -1,5 +1,9 @@
 name: health
 on:
+  workflow_run:
+    workflows: ["deploy"]
+    types:
+      - completed
   schedule:
     - cron: "0 12 * * *"
   workflow_dispatch:
