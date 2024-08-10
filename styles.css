@@ -113,7 +113,7 @@ body {
     background-color: var(--background-color) !important;
     color: var(--text-color) !important;
   }
-  
+
   .trivia-button {
     cursor: none;
   }
@@ -125,8 +125,7 @@ body {
 }
 
 .trivia-button:active,
-.trivia-button:hover
-span {
+.trivia-button:hover span {
   transform: scale(0.975);
 }
 
