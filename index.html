@@ -4,6 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Jesse Kela - IT Consultant & Developer" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="
+        script-src 'self';
+        style-src 'self' https://cdnjs.cloudflare.com;
+        font-src 'self' https://cdnjs.cloudflare.com;
+        img-src 'self' blob:;
+        connect-src 'self' https://opentdb.com;
+        object-src 'none';
+        base-uri 'none';
+        form-action 'none';
+      "
+    />
     <title>Home | Jesse Kela</title>
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="styles.css" />
@@ -28,7 +41,7 @@
             class="icon-link"
             href="https://t.me/Tsingis"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             aria-label="Telegram"
           >
             <i class="icon fab fa-telegram"></i>
@@ -36,7 +49,7 @@
           <a
             class="icon-link"
             href="mailto:jessekkela@gmail.com"
-            rel="noopener"
+            rel="noopener noreferrer"
             aria-label="Email"
           >
             <i class="icon fas fa-envelope"></i>
@@ -45,7 +58,7 @@
             class="icon-link"
             href="https://www.linkedin.com/in/jesse-kela/"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             aria-label="LinkedIn"
           >
             <i class="icon fab fa-linkedin"></i>
@@ -54,7 +67,7 @@
             class="icon-link"
             href="https://github.com/Tsingis"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             aria-label="GitHub"
           >
             <i class="icon fab fa-github"></i>
@@ -63,7 +76,7 @@
             class="icon-link"
             href="https://tryhackme.com/p/Tsingis"
             target="_blank"
-            rel="noopener"
+            rel="noopener noreferrer"
             aria-label="TryHackMe"
           >
             <svg
