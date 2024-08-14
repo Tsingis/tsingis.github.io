@@ -10,6 +10,7 @@ const questionElem = document.querySelector(".trivia-question")
 const optionsGridElem = document.querySelector(".trivia-options-grid")
 const answerElem = document.querySelector(".trivia-answer")
 const loadingElem = document.querySelector(".trivia-loading")
+const triviaButtonElem = document.querySelector(".trivia-button")
 
 document.addEventListener("DOMContentLoaded", () => {
   answerElem.addEventListener("click", toggleAnswer)
@@ -20,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
   })
   answerElem.addEventListener("touchend", handleAnswerTouchEnd)
   document.addEventListener("touchmove", handleTouchMove)
+  triviaButtonElem.addEventListener("click", setTrivia)
   fetchTrivia()
 })
 
