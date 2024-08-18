@@ -2,13 +2,16 @@ C#
 .NET
 SQL Server
 Python
+Git
 AWS
 Azure
 Docker
-Jenkins
-Azure DevOps
-Github Actions
-Git
-Jira
-JavaScript
 TypeScript
+HTML
+CSS
+React
+Azure DevOps
+Github
+Jira
+Jenkins
+Serverless
