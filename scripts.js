@@ -1,4 +1,4 @@
-const triviasAmount = 10
+const triviasAmount = 50
 const showText = "Show answer"
 
 let answer = ""
