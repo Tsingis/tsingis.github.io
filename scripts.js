@@ -1,49 +1,19 @@
 const triviasAmount = 50
-const showText = "Show answer"
-
-let answer = ""
-let isTouchingAnswer = false
+let isLoading = true
 let trivias = []
 let triviaIndex = 0
 
 const questionElem = document.querySelector(".trivia-question")
 const optionsGridElem = document.querySelector(".trivia-options-grid")
-const answerElem = document.querySelector(".trivia-answer")
 const loadingElem = document.querySelector(".trivia-loading")
 const triviaButtonElem = document.querySelector(".trivia-button")
+const showAnswerButtonElem = document.querySelector(".trivia-answer-button")
 
 document.addEventListener("DOMContentLoaded", () => {
-  answerElem.addEventListener("click", toggleAnswer)
-  answerElem.addEventListener("mouseover", showAnswer)
-  answerElem.addEventListener("mouseleave", resetAnswer)
-  answerElem.addEventListener("touchstart", handleAnswerTouchStart, {
-    passive: true,
-  })
-  answerElem.addEventListener("touchend", handleAnswerTouchEnd)
-  document.addEventListener("touchmove", handleTouchMove)
   triviaButtonElem.addEventListener("click", setTrivia)
+  showAnswerButtonElem.addEventListener("click", showAnswer)
   fetchTrivia()
 })
-
-function handleAnswerTouchStart(event) {
-  event.stopPropagation()
-  isTouchingAnswer = true
-  document.body.style.overflow = "hidden"
-}
-
-function handleAnswerTouchEnd(event) {
-  event.stopPropagation()
-  isTouchingAnswer = false
-  document.body.style.overflow = "auto"
-}
-
-function handleTouchMove(event) {
-  if (!isTouchingAnswer) {
-    document.body.style.overflow = "auto"
-  } else {
-    document.body.style.overflow = "hidden"
-  }
-}
 
 function fetchTrivia() {
   setLoading(true)
@@ -73,37 +43,45 @@ function fetchTrivia() {
 }
 
 function setLoading(loading) {
+  isLoading = loading
   loadingElem.style.display = loading ? "block" : "none"
-}
-
-function isLoading() {
-  return loadingElem.style.display === "block"
+  showAnswerButtonElem.style.display = loading ? "none" : "block"
 }
 
 function setTrivia() {
   resetTrivia()
-  if (isLoading()) {
+  if (isLoading) {
     return
   }
   if (triviaIndex === triviasAmount) {
     fetchTrivia()
   } else {
     let trivia = trivias[triviaIndex]
-    answer = trivia.correct
-    formatOptions(trivia.options, trivia.type)
+    formatOptions(trivia)
     questionElem.innerText = decodeHTML(trivia.question)
-    answerElem.innerText = showText
     triviaIndex++
   }
 }
 
 function resetTrivia() {
   questionElem.innerText = ""
-  answerElem.innerText = ""
   optionsGridElem.innerHTML = ""
 }
 
-function formatOptions(options, type) {
+function showAnswer() {
+  const incorrectOptionsElems = document.querySelectorAll(".incorrect")
+  incorrectOptionsElems.forEach((elem) => {
+    elem.style.visibility = "hidden"
+    setTimeout(() => {
+      elem.style.visibility = "visible"
+    }, 3000)
+  })
+}
+
+function formatOptions(trivia) {
+  const options = trivia.options
+  const type = trivia.type
+
   options.sort()
   if (type === "boolean") {
     options.reverse()
@@ -122,7 +100,12 @@ function formatOptions(options, type) {
     column.textContent = `${String.fromCharCode(i + 65)})`
 
     const option = document.createElement("span")
-    option.textContent = decodeHTML(options[i])
+    const optionContent = decodeHTML(options[i])
+    option.textContent = optionContent
+
+    if (optionContent !== trivia.correct) {
+      option.classList.add("incorrect")
+    }
 
     column.appendChild(option)
     row.appendChild(column)
@@ -136,28 +119,4 @@ function decodeHTML(html) {
   const text = document.createElement("textarea")
   text.innerHTML = html
   return text.value
-}
-
-function showAnswer() {
-  if (!isLoading()) {
-    answerElem.innerText = decodeHTML(answer)
-  }
-}
-
-function resetAnswer() {
-  if (!isLoading()) {
-    answerElem.innerText = showText
-  }
-}
-
-function toggleAnswer() {
-  if (!isLoading()) {
-    if (answerElem.classList.contains("active")) {
-      answerElem.classList.remove("active")
-      answerElem.innerText = showText
-    } else {
-      answerElem.classList.add("active")
-      answerElem.innerText = decodeHTML(answer)
-    }
-  }
 }
