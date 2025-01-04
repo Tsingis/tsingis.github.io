@@ -11,7 +11,7 @@ if [ "$STATUS" -ne 200 ]; then
 fi
 
 CONTENT=$(curl -s "$URL")
-if echo "$CONTENT" | grep -q "$SEARCH_TEXT"; then
-    echo "Text found"
-    exit 0
+if ! echo "$CONTENT" | grep -q "$SEARCH_TEXT"; then
+    echo "No text found"
+    exit 1
 fi
