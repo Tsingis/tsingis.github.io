@@ -1,5 +1,11 @@
 name: codeql
 on:
+  push:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - ".github/workflows/codeql.yml"
   schedule:
     - cron: "0 21 1 * *"
   workflow_dispatch:
