@@ -1,7 +1,9 @@
-const triviasAmount = 50
-let isLoading = true
-let trivias = []
+const fetchAmount = 50
+const maxTrivias = fetchAmount * 5
 let triviaIndex = 0
+let trivias = []
+let isLoading = true
+let fetchingInProgress = false
 
 const questionElem = document.querySelector(".trivia-question")
 const optionsGridElem = document.querySelector(".trivia-options-grid")
@@ -14,33 +16,39 @@ document.addEventListener("DOMContentLoaded", () => {
   triviaPrevButtonElem.addEventListener("click", prevTrivia)
   triviaNextButtonElem.addEventListener("click", nextTrivia)
   showAnswerButtonElem.addEventListener("click", showAnswer)
+
+  setLoading(true)
   fetchTrivia()
 })
 
-function fetchTrivia() {
-  setLoading(true)
-  resetTrivia()
-  fetch(`https://opentdb.com/api.php?amount=${triviasAmount}`)
-    .then((response) => response.json())
-    .then((data) => {
-      const newTrivias = data.results.map((result) => {
-        let options = result.incorrect_answers
-        options.push(result.correct_answer)
-        return {
-          question: result.question,
-          type: result.type,
-          correct: result.correct_answer,
-          options: options,
-        }
-      })
-      trivias = trivias.concat(newTrivias)
+async function fetchTrivia() {
+  if (fetchingInProgress || trivias.length >= maxTrivias) return
+  fetchingInProgress = true
+
+  try {
+    const response = await fetch(
+      `https://opentdb.com/api.php?amount=${fetchAmount}`
+    )
+    const data = await response.json()
+
+    const newTrivias = data.results.map((result) => ({
+      question: result.question,
+      type: result.type,
+      correct: result.correct_answer,
+      options: [...result.incorrect_answers, result.correct_answer],
+    }))
+
+    trivias.push(...newTrivias)
+    if (isLoading) {
       setLoading(false)
       setTrivia()
-    })
-    .catch((error) => {
-      setLoading(true)
-      setTimeout(fetchTrivia, 2000)
-    })
+    }
+  } catch (error) {
+    setTimeout(fetchTrivia, 2000)
+  } finally {
+    fetchingInProgress = false
+    updateButtons()
+  }
 }
 
 function setLoading(loading) {
@@ -51,40 +59,45 @@ function setLoading(loading) {
 }
 
 function updateButtons() {
-  triviaPrevButtonElem.disabled = triviaIndex <= 0 || isLoading
-  triviaNextButtonElem.disabled = isLoading
+  triviaPrevButtonElem.disabled = isLoading || triviaIndex === 0
+  triviaNextButtonElem.disabled =
+    isLoading || triviaIndex >= Math.min(trivias.length, maxTrivias) - 1
 }
 
 function setTrivia() {
+  if (isLoading) return
+
   resetTrivia()
-  if (isLoading) {
+  if (triviaIndex >= trivias.length) {
+    setLoading(true)
+    fetchTrivia()
     return
   }
-  if (triviaIndex >= trivias.length) {
-    fetchTrivia()
-  } else {
-    let trivia = trivias[triviaIndex]
-    formatOptions(trivia)
-    questionElem.innerText = decodeHTML(trivia.question)
-  }
+
+  const trivia = trivias[triviaIndex]
+  formatOptions(trivia)
+  questionElem.innerText = decodeHTML(trivia.question)
   updateButtons()
 }
 
 function prevTrivia() {
-  if (triviaIndex >= 0) {
+  if (triviaIndex > 0) {
     triviaIndex--
     setTrivia()
   }
 }
 
 function nextTrivia() {
-  if (!triviaNextButtonElem.disabled) {
-    triviaIndex++
-    if (triviaIndex < trivias.length) {
-      setTrivia()
-    } else {
-      fetchTrivia()
-    }
+  if (triviaNextButtonElem.disabled) return
+
+  triviaIndex++
+  setTrivia()
+
+  if (
+    triviaIndex >= Math.floor(trivias.length * 0.8) &&
+    trivias.length < maxTrivias
+  ) {
+    fetchTrivia()
   }
 }
 
@@ -94,8 +107,7 @@ function resetTrivia() {
 }
 
 function showAnswer() {
-  const incorrectOptionsElems = document.querySelectorAll(".incorrect")
-  incorrectOptionsElems.forEach((elem) => {
+  document.querySelectorAll(".incorrect").forEach((elem) => {
     elem.style.visibility = "hidden"
     setTimeout(() => {
       elem.style.visibility = "visible"
@@ -104,40 +116,30 @@ function showAnswer() {
 }
 
 function formatOptions(trivia) {
-  const options = trivia.options
-  const type = trivia.type
+  const options =
+    trivia.type === "boolean"
+      ? [...trivia.options].reverse()
+      : [...trivia.options].sort()
 
-  options.sort()
-  if (type === "boolean") {
-    options.reverse()
-  }
+  options.forEach((option, i) => {
+    const rowElem = document.createElement("div")
+    rowElem.classList.add("row")
 
-  let counter = 0
-  for (let i = 0; i < options.length; i++) {
-    const row = document.createElement("div")
-    if (counter % 2 === 0) {
-      row.classList.add("row")
-      optionsGridElem.appendChild(row)
+    const columnElem = document.createElement("div")
+    columnElem.classList.add("column")
+    columnElem.textContent = `${String.fromCharCode(i + 65)})`
+
+    const optionElem = document.createElement("span")
+    optionElem.textContent = decodeHTML(option)
+
+    if (option !== trivia.correct) {
+      optionElem.classList.add("incorrect")
     }
 
-    const column = document.createElement("div")
-    column.classList.add("column")
-    column.textContent = `${String.fromCharCode(i + 65)})`
-
-    const option = document.createElement("span")
-    const optionContent = decodeHTML(options[i])
-    option.textContent = optionContent
-
-    if (optionContent !== trivia.correct) {
-      option.classList.add("incorrect")
-    }
-
-    column.appendChild(option)
-    row.appendChild(column)
-    counter++
-
-    optionsGridElem.appendChild(row)
-  }
+    columnElem.appendChild(optionElem)
+    rowElem.appendChild(columnElem)
+    optionsGridElem.appendChild(rowElem)
+  })
 }
 
 function decodeHTML(html) {
