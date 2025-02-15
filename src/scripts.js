@@ -51,7 +51,7 @@ function setLoading(loading) {
 }
 
 function updateButtons() {
-  triviaPrevButtonElem.disabled = triviaIndex <= 1 || isLoading
+  triviaPrevButtonElem.disabled = triviaIndex <= 0 || isLoading
   triviaNextButtonElem.disabled = isLoading
 }
 
@@ -66,20 +66,20 @@ function setTrivia() {
     let trivia = trivias[triviaIndex]
     formatOptions(trivia)
     questionElem.innerText = decodeHTML(trivia.question)
-    triviaIndex++
   }
   updateButtons()
 }
 
 function prevTrivia() {
-  if (triviaIndex > 1) {
-    triviaIndex -= 2
+  if (triviaIndex >= 0) {
+    triviaIndex--
     setTrivia()
   }
 }
 
 function nextTrivia() {
   if (!triviaNextButtonElem.disabled) {
+    triviaIndex++
     if (triviaIndex < trivias.length) {
       setTrivia()
     } else {
