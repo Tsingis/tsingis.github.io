@@ -118,8 +118,8 @@ function showAnswer() {
 function formatOptions(trivia) {
   const options =
     trivia.type === "boolean"
-      ? [...trivia.options].reverse()
-      : [...trivia.options].sort()
+      ? [...trivia.options].sort((a, b) => b.localeCompare(a))
+      : [...trivia.options].sort((a, b) => a.localeCompare(b))
 
   options.forEach((option, i) => {
     const rowElem = document.createElement("div")
