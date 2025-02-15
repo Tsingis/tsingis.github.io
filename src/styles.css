@@ -135,14 +135,20 @@ button:not(:disabled):hover span {
   margin-bottom: 10px;
 }
 
-.trivia-loading {
-  margin-top: 50px;
-  font-size: 30px;
+.trivia-prev-button,
+.trivia-next-button {
+  font-size: 12px;
+  width: 50px;
 }
 
 .trivia-answer-button {
   font-size: 14px;
   margin-top: 10px;
+}
+
+.trivia-loading {
+  font-size: 30px;
+  margin-top: 50px;
 }
 
 .trivia-question {
@@ -153,10 +159,10 @@ button:not(:disabled):hover span {
 }
 
 .trivia-options-grid {
-  font-size: 16px;
-  display: grid;
-  grid-template-rows: repeat(4, auto);
   align-items: start;
+  display: grid;
+  font-size: 16px;
+  grid-template-rows: repeat(4, auto);
 }
 
 .trivia-options-grid .row {
