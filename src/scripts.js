@@ -6,33 +6,34 @@ let triviaIndex = 0
 const questionElem = document.querySelector(".trivia-question")
 const optionsGridElem = document.querySelector(".trivia-options-grid")
 const loadingElem = document.querySelector(".trivia-loading")
-const triviaButtonElem = document.querySelector(".trivia-button")
+const triviaPrevButtonElem = document.querySelector(".trivia-prev-button")
+const triviaNextButtonElem = document.querySelector(".trivia-next-button")
 const showAnswerButtonElem = document.querySelector(".trivia-answer-button")
 
 document.addEventListener("DOMContentLoaded", () => {
-  triviaButtonElem.addEventListener("click", setTrivia)
+  triviaPrevButtonElem.addEventListener("click", prevTrivia)
+  triviaNextButtonElem.addEventListener("click", nextTrivia)
   showAnswerButtonElem.addEventListener("click", showAnswer)
   fetchTrivia()
 })
 
 function fetchTrivia() {
   setLoading(true)
+  resetTrivia()
   fetch(`https://opentdb.com/api.php?amount=${triviasAmount}`)
     .then((response) => response.json())
     .then((data) => {
-      trivias = []
-      triviaIndex = 0
-      data.results.forEach((result) => {
+      const newTrivias = data.results.map((result) => {
         let options = result.incorrect_answers
         options.push(result.correct_answer)
-        let trivia = {
+        return {
           question: result.question,
           type: result.type,
           correct: result.correct_answer,
           options: options,
         }
-        trivias.push(trivia)
       })
+      trivias = trivias.concat(newTrivias)
       setLoading(false)
       setTrivia()
     })
@@ -46,6 +47,12 @@ function setLoading(loading) {
   isLoading = loading
   loadingElem.style.display = loading ? "block" : "none"
   showAnswerButtonElem.style.display = loading ? "none" : "block"
+  updateButtons()
+}
+
+function updateButtons() {
+  triviaPrevButtonElem.disabled = triviaIndex <= 1 || isLoading
+  triviaNextButtonElem.disabled = isLoading
 }
 
 function setTrivia() {
@@ -53,13 +60,31 @@ function setTrivia() {
   if (isLoading) {
     return
   }
-  if (triviaIndex === triviasAmount) {
+  if (triviaIndex >= trivias.length) {
     fetchTrivia()
   } else {
     let trivia = trivias[triviaIndex]
     formatOptions(trivia)
     questionElem.innerText = decodeHTML(trivia.question)
     triviaIndex++
+  }
+  updateButtons()
+}
+
+function prevTrivia() {
+  if (triviaIndex > 1) {
+    triviaIndex -= 2
+    setTrivia()
+  }
+}
+
+function nextTrivia() {
+  if (!triviaNextButtonElem.disabled) {
+    if (triviaIndex < trivias.length) {
+      setTrivia()
+    } else {
+      fetchTrivia()
+    }
   }
 }
 

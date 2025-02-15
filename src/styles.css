@@ -17,11 +17,16 @@ button {
   background-color: var(--background-color);
   color: var(--text-color);
   padding: 5px 10px;
-  margin: 10px;
   border: solid 2px rgba(244, 244, 244, 0.2);
   border-radius: 12px;
   cursor: pointer;
   outline: none;
+}
+
+button:disabled {
+  background-color: rgba(244, 244, 244, 0.2);
+  color: rgba(244, 244, 244, 0.5);
+  cursor: default;
 }
 
 @media (hover: none) and (pointer: coarse) {
@@ -35,13 +40,13 @@ button {
   }
 }
 
-button:hover {
+button:not(:disabled):hover {
   background-color: var(--text-color);
   color: var(--background-color);
 }
 
-button:active,
-button:hover span {
+button:not(:disabled):active,
+button:not(:disabled):hover span {
   transform: scale(0.975);
 }
 
@@ -123,17 +128,21 @@ button:hover span {
   margin: 0;
 }
 
+.trivia-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+
 .trivia-loading {
   margin-top: 50px;
   font-size: 30px;
 }
 
-.trivia-button {
-  font-size: 18px;
-}
-
 .trivia-answer-button {
   font-size: 14px;
+  margin-top: 10px;
 }
 
 .trivia-question {
