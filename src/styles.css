@@ -30,12 +30,12 @@ button:disabled {
 }
 
 @media (hover: none) and (pointer: coarse) {
-  button:hover {
+  button:not(:disabled):hover {
     background-color: var(--background-color) !important;
     color: var(--text-color) !important;
   }
 
-  button {
+  button:not(:disabled) {
     cursor: none;
   }
 }
