@@ -15,3 +15,7 @@ Github
 Jira
 Jenkins
 Serverless
+Vue
+Cloudformation
+Bicep
+Terraform
