@@ -43,7 +43,7 @@ async function fetchTrivia() {
       setLoading(false)
       setTrivia()
     }
-  } catch (error) {
+  } catch {
     setTimeout(fetchTrivia, 2000)
   } finally {
     fetchingInProgress = false
