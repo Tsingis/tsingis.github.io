@@ -108,7 +108,7 @@ button:not(:disabled):hover span {
   display: inline-block;
   color: var(--text-color);
   font-size: 36px;
-  margin: 0 10px;
+  margin: 0;
   width: 36px;
   vertical-align: middle;
 }
