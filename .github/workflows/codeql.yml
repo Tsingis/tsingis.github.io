@@ -5,7 +5,7 @@ on:
       - main
     paths:
       - "src/**"
-      - ".github/workflows/codeql.yml"
+      - ".github/workflows/**/*.yml"
   schedule:
     - cron: "0 21 1 * *"
   workflow_dispatch:
