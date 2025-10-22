@@ -5,7 +5,7 @@ SEARCH_TEXT="$2"
 
 STATUS=$(curl --silent --output /dev/null --write-out "%{response_code}\n" "$URL")
 
-if [ "$STATUS" -ne 200 ]; then
+if [[ "$STATUS" -ne 200 ]]; then
     echo "Status $STATUS"
     exit 1
 fi

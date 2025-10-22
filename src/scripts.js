@@ -107,12 +107,13 @@ function resetTrivia() {
 }
 
 function showAnswer() {
-  document.querySelectorAll(".incorrect").forEach((elem) => {
+  const incorrectElements = document.querySelectorAll(".incorrect")
+  for (const elem of incorrectElements) {
     elem.style.visibility = "hidden"
     setTimeout(() => {
       elem.style.visibility = "visible"
     }, 3000)
-  })
+  }
 }
 
 function formatOptions(trivia) {
@@ -121,13 +122,14 @@ function formatOptions(trivia) {
       ? [...trivia.options].sort((a, b) => b.localeCompare(a))
       : [...trivia.options].sort((a, b) => a.localeCompare(b))
 
-  options.forEach((option, i) => {
+  for (let i = 0; i < options.length; i++) {
+    const option = options[i]
     const rowElem = document.createElement("div")
     rowElem.classList.add("row")
 
     const columnElem = document.createElement("div")
     columnElem.classList.add("column")
-    columnElem.textContent = `${String.fromCharCode(i + 65)})`
+    columnElem.textContent = `${String.fromCodePoint(i + 65)})`
 
     const optionElem = document.createElement("span")
     optionElem.textContent = decodeHTML(option)
@@ -139,7 +141,7 @@ function formatOptions(trivia) {
     columnElem.appendChild(optionElem)
     rowElem.appendChild(columnElem)
     optionsGridElem.appendChild(rowElem)
-  })
+  }
 }
 
 function decodeHTML(html) {
