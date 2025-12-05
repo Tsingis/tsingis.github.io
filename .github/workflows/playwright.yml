@@ -18,6 +18,8 @@ on:
           - "local"
           - "remote"
         default: "local"
+  schedule:
+    - cron: "0 21 1 * *"
 env:
   NO_UPDATE_NOTIFIER: true
 jobs:
@@ -45,7 +47,7 @@ jobs:
         env:
           CI: true
       - name: Run tests (remote)
-        if: ${{ inputs.baseUrl == 'remote'}}
+        if: ${{ inputs.baseUrl != 'local'}}
         run: npm run playwright
         working-directory: ./tests
         env:
