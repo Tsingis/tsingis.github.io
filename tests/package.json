@@ -1,0 +1,16 @@
+{
+  "name": "tsingis.github.io",
+  "scripts": {
+    "playwright": "npx playwright test",
+    "playwright:update": "npx playwright test --update-snapshots",
+    "playwright:setup": "npx playwright install --with-deps",
+    "server": "http-server ../src --cors --host 127.0.0.1 -p 3333"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.11.0",
+    "@playwright/test": "^1.57.0",
+    "@types/node": "^24.10.1",
+    "http-server": "^14.1.1",
+    "typescript": "^5.9.3"
+  }
+}

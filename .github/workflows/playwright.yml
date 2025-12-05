@@ -1,0 +1,46 @@
+name: playwright
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "src/**"
+      - "tests/package*.json"
+      - "tests/**/*.spec.ts"
+      - ".github/workflows/playwright.yml"
+  workflow_dispatch:
+    inputs:
+      baseUrl:
+        description: "Base URL for tests"
+        required: true
+        type: choice
+        options:
+          - "local"
+          - "https://jessekela.com"
+        default: "local"
+env:
+  NO_UPDATE_NOTIFIER: true
+jobs:
+  playwright:
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+          cache: "npm"
+          cache-dependency-path: "tests/package-lock.json"
+      - name: Install dependencies
+        run: npm ci
+        working-directory: ./tests
+      - name: Setup
+        run: npm run playwright:setup
+        working-directory: ./tests
+      - name: Run tests
+        run: npm run playwright
+        working-directory: ./tests
+        env:
+          CI: true
+          BASE_URL: ${{ inputs.baseUrl == 'local' && '' || inputs.baseUrl }}
