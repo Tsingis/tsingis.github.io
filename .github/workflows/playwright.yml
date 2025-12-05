@@ -16,7 +16,7 @@ on:
         type: choice
         options:
           - "local"
-          - "https://jessekela.com"
+          - "remote"
         default: "local"
 env:
   NO_UPDATE_NOTIFIER: true
@@ -38,9 +38,16 @@ jobs:
       - name: Setup
         run: npm run playwright:setup
         working-directory: ./tests
-      - name: Run tests
+      - name: Run tests (local)
+        if: ${{ inputs.baseUrl == 'local' }}
         run: npm run playwright
         working-directory: ./tests
         env:
           CI: true
-          BASE_URL: ${{ inputs.baseUrl == 'local' && '' || inputs.baseUrl }}
+      - name: Run tests (remote)
+        if: ${{ inputs.baseUrl == 'remote'}}
+        run: npm run playwright
+        working-directory: ./tests
+        env:
+          CI: true
+          BASE_URL: ${{ vars.URL }}

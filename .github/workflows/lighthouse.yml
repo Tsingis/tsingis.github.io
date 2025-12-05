@@ -5,8 +5,6 @@ on:
     types:
       - completed
   workflow_dispatch:
-env:
-  URL: https://jessekela.com/
 jobs:
   lighthouse:
     runs-on: ubuntu-latest
@@ -18,11 +16,11 @@ jobs:
         id: lighthouse
         uses: treosh/lighthouse-ci-action@v12
         with:
-          urls: ${{ env.URL }}
+          urls: ${{ vars.URL }}
           runs: 3
           uploadArtifacts: false
           temporaryPublicStorage: true
       - name: Report
         run: |
-          LINKS=$(echo '${{ steps.lighthouse.outputs.links }}' | jq -r --arg url "${{ env.URL }}" '.[$url]')
+          LINKS=$(echo '${{ steps.lighthouse.outputs.links }}' | jq -r --arg url "${{ vars.URL }}" '.[$url]')
           echo "[Results]($LINKS)" >> $GITHUB_STEP_SUMMARY
