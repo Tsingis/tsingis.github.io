@@ -12,18 +12,26 @@ def run_command(command):
     return result.stdout
 
 
-def delete_deployments(owner, repo):
-    url = f"/repos/{owner}/{repo}/deployments"
+def delete_deployments(owner, repo, environment=None):
+
+    if (environment):
+        url = f"/repos/{owner}/{repo}/deployments?environment={environment}"
+    else:
+        url = f"/repos/{owner}/{repo}/deployments"
 
     get_command = f"gh api {url} --paginate"
     deployments = json.loads(run_command(get_command))
+
+    if not deployments:
+        print("No deployments found")
+        return
 
     deployments.sort(key=lambda x: x["created_at"], reverse=True)
 
     ids = [deployment["id"] for deployment in deployments[1:]]
 
     for id in ids:
-        delete_command = f"gh api {url}/{id} --method DELETE"
+        delete_command = f"gh api /repos/{owner}/{repo}/deployments/{id} --method DELETE"
         run_command(delete_command)
 
 
@@ -31,5 +39,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("owner", type=str, help="The name of repository owner")
     parser.add_argument("repo", type=str, help="The name of repository")
+    parser.add_argument("environment", type=str, nargs='?', default=None, help="The name of environment (optional)")
     args = parser.parse_args()
-    delete_deployments(args.owner, args.repo)
+    delete_deployments(args.owner, args.repo, args.environment)
