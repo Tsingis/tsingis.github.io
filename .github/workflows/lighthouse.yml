@@ -38,13 +38,11 @@ jobs:
           > "${{ runner.temp }}/lighthouse-summary.json"
       - name: Create summary branch and push content
         run: |
-          git fetch
-          git checkout lighthouse-summary || git checkout --orphan lighthouse-summary
-          git reset --hard
-          git clean -fd
+          git fetch origin lighthouse-summary
+          git checkout lighthouse-summary || git checkout -b lighthouse-summary
           cp -rp ${{ runner.temp }}/lighthouse-summary.json ./
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add .
+          git add lighthouse-summary.json
           git commit -m "Update lighthouse summary" || echo "No changes to commit"
-          git push origin lighthouse-summary --force
+          git push origin lighthouse-summary
