@@ -1,20 +1,6 @@
-[
-  {
-    "performance": 82,
-    "accessibility": 100,
-    "best_practices": 100,
-    "seo": 100
-  },
-  {
-    "performance": 91,
-    "accessibility": 100,
-    "best_practices": 100,
-    "seo": 100
-  },
-  {
-    "performance": 90,
-    "accessibility": 100,
-    "best_practices": 100,
-    "seo": 100
-  }
-]
+{
+  "performance": 90,
+  "accessibility": 100,
+  "best_practices": 100,
+  "seo": 100
+}
