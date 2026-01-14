@@ -4,6 +4,8 @@ on:
     workflows: ["deploy"]
     types:
       - completed
+  schedule:
+    - cron: "0 21 1 * *"
   workflow_dispatch:
 jobs:
   lighthouse:
