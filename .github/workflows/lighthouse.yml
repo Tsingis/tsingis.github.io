@@ -9,7 +9,7 @@ jobs:
   lighthouse:
     runs-on: ubuntu-latest
     permissions:
-      contents: read
+      contents: write
     steps:
       - uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
       - name: Run audit
@@ -24,3 +24,25 @@ jobs:
         run: |
           LINKS=$(echo '${{ steps.lighthouse.outputs.links }}' | jq -r --arg url "${{ vars.URL }}" '.[$url]')
           echo "[Results]($LINKS)" >> $GITHUB_STEP_SUMMARY
+      - name: Create json summary
+        run: |
+          echo '${{ steps.lighthouse.outputs.manifest }}' \
+          | jq '.[-1] | {
+              performance: (.summary.performance * 100 | round),
+              accessibility: (.summary.accessibility * 100 | round),
+              best_practices: (.summary["best-practices"] * 100 | round),
+              seo: (.summary.seo * 100 | round)
+            }' \
+          > "${{ runner.temp }}/lighthouse-summary.json"
+      - name: Create summary branch and push content
+        run: |
+          git fetch
+          git checkout lighthouse-summary || git checkout --orphan lighthouse-summary
+          git reset --hard
+          git clean -fd
+          cp -rp ${{ runner.temp }}/lighthouse-summary.json ./
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Update lighthouse summary" || echo "No changes to commit"
+          git push origin lighthouse-summary --force
