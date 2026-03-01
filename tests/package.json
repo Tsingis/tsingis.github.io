@@ -7,7 +7,7 @@
     "server": "http-server ../src --cors --host 127.0.0.1 -p 3333"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.11.0",
+    "@axe-core/playwright": "^4.11.1",
     "@playwright/test": "^1.58.1",
     "@types/node": "^25.3.3",
     "http-server": "^14.1.1",
