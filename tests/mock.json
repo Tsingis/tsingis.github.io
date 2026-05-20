@@ -1,0 +1,27 @@
+{
+  "response_code": 0,
+  "results": [
+    {
+      "type": "boolean",
+      "difficulty": "easy",
+      "category": "General Knowledge",
+      "question": "Question: True or False?",
+      "correct_answer": "False",
+      "incorrect_answers": [
+        "True"
+      ]
+    },
+    {
+      "type": "multiple",
+      "difficulty": "easy",
+      "category": "General Knowledge",
+      "question": "Question: A, B, C or D?",
+      "correct_answer": "A",
+      "incorrect_answers": [
+        "B",
+        "C",
+        "D"
+      ]
+    }
+  ]
+}

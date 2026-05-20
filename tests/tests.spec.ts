@@ -1,7 +1,42 @@
 import { expect, Page, test } from "@playwright/test";
 import { AxeBuilder} from "@axe-core/playwright";
+import mock from "./mock.json";
 
-test("Page loads", async ({ page }) => {
+test("Works with mock", async ({ page }) => {
+  const base = (test.info().project.use?.baseURL ?? process.env.BASE_URL ?? "");
+  if (!base.toLowerCase().includes("localhost")) {
+    test.skip(true, "Skipping on remote");
+  }
+  
+  await page.route("**/api.php**", async route =>
+  {
+    await route.fulfill({
+      body: JSON.stringify(mock),
+    })
+  });
+
+  await page.goto("/");
+  
+  await page.waitForSelector(".trivia-loading", { state: "hidden" });
+
+  const title = test.info().title;
+
+  const booleanQuestion = page.locator(".trivia-question")
+
+  await expect(booleanQuestion).toContainText("Question: True or False?");
+    
+  await expect(page).toHaveScreenshot(`${title}-question-boolean.png`);
+
+  await page.click(".trivia-next-button")
+
+  const multipleQuestion = page.locator(".trivia-question")
+
+  await expect(multipleQuestion).toContainText("Question: A, B, C or D?");
+
+  await expect(page).toHaveScreenshot(`${title}-question-multiple.png`);
+});
+
+test("Works with mask", async ({ page }) => {
   await page.goto("/");
   
   await page.waitForSelector(".trivia-loading", { state: "hidden" });
