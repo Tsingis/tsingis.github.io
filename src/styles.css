@@ -175,10 +175,13 @@ button:not(:disabled):hover span {
 
 .trivia-options-grid .column {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  justify-content: flex-start;
   padding: 0.3125rem;
+  text-align: left;
 }
 
 .trivia-options-grid .column span {
   margin-left: 0.3125rem;
+  text-align: left;
 }
