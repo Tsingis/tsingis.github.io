@@ -45,6 +45,9 @@ jobs:
         with:
           path: ${{ github.workspace }}/.cache/ms-playwright
           key: ${{ runner.os }}-playwright-${{ hashFiles('tests/package-lock.json') }}
+      - name: Typecheck
+        run: npm run typecheck
+        working-directory: ./tests
       - name: Setup
         run: npm run playwright:setup
         working-directory: ./tests

@@ -7,7 +7,6 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "rootDir": ".",
-    "outDir": "dist",
     "moduleResolution": "bundler",
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
@@ -16,6 +15,7 @@
     "noEmit": true,
     "types": ["node", "playwright"],
     "strict": true,
+    "incremental": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true

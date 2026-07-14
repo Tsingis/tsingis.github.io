@@ -1,6 +1,7 @@
 {
   "name": "tsingis.github.io",
   "scripts": {
+    "typecheck": "tsc",
     "playwright": "npx playwright test",
     "playwright:update": "npx playwright test --update-snapshots",
     "playwright:setup": "npx playwright install --with-deps",
