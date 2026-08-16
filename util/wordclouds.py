@@ -1,3 +1,4 @@
+from pathlib import Path
 from wordcloud import WordCloud
 from PIL import Image, ImageDraw
 from typing import List, Tuple
@@ -5,12 +6,19 @@ import numpy as np
 
 
 def create_svg(filename: str, background_color: str, text_color: str) -> None:
-    with open("buzzwords.txt", "r") as f:
+    base_dir = Path(__file__).resolve().parent
+    words_path = base_dir / "buzzwords.txt"
+    if Path(filename).is_absolute():
+        output_path = Path(filename)
+    else:
+        output_path = base_dir / filename
+
+    with words_path.open("r", encoding="utf-8") as f:
         words = [word.strip() for word in f.readlines()]
         mask = create_mask((1000, 800))
         wordcloud = create_wordcloud(words, mask, background_color, text_color)
         svg = wordcloud.to_svg(embed_font=True)
-        with open(filename, "w") as f:
+        with output_path.open("w", encoding="utf-8") as f:
             f.write(svg)
 
 
