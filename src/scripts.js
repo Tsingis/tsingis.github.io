@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", () => {
   showAnswerButtonElem.addEventListener("click", showAnswer)
 
   setLoading(true)
-  fetchTrivia()
+  void fetchTrivia()
 })
 
 async function fetchTrivia() {
@@ -44,7 +44,7 @@ async function fetchTrivia() {
       setTrivia()
     }
   } catch {
-    setTimeout(fetchTrivia, 2000)
+    setTimeout(() => void fetchTrivia(), 2000)
   } finally {
     fetchingInProgress = false
     updateButtons()
@@ -70,7 +70,7 @@ function setTrivia() {
   resetTrivia()
   if (triviaIndex >= trivias.length) {
     setLoading(true)
-    fetchTrivia()
+    void fetchTrivia()
     return
   }
 
@@ -97,7 +97,7 @@ function nextTrivia() {
     triviaIndex >= Math.floor(trivias.length * 0.8) &&
     trivias.length < maxTrivias
   ) {
-    fetchTrivia()
+    void fetchTrivia()
   }
 }
 
