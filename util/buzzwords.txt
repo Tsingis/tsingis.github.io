@@ -7,15 +7,9 @@ AWS
 Azure
 Docker
 TypeScript
-HTML
-CSS
 React
 Azure DevOps
 Github
-Jira
-Jenkins
 Serverless
-Vue
 Cloudformation
-Bicep
 Terraform
