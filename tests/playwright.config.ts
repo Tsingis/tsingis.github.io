@@ -26,6 +26,7 @@ const config: PlaywrightTestConfig = {
     timeout: 10_000,
     toHaveScreenshot: {
       maxDiffPixelRatio: 0,
+      threshold: 0.01,
       animations: "disabled",
     },
   },
