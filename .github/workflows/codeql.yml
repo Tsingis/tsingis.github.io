@@ -5,6 +5,7 @@ on:
       - main
     paths:
       - "src/**"
+      - "util/**/*.py"
       - ".github/workflows/**/*.yml"
   schedule:
     - cron: "0 21 1 * *"
@@ -22,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        language: ["javascript", "actions"]
+        language: ["javascript", "python", "actions"]
     steps:
       - uses: actions/checkout@v7.0.1
       - name: Initialize CodeQL
