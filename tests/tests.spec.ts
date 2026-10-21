@@ -8,12 +8,7 @@ test("Works with mock", async ({ page }) => {
     test.skip(true, "Skipping on remote");
   }
   
-  await page.route("**/api.php**", async route =>
-  {
-    await route.fulfill({
-      body: JSON.stringify(mock),
-    })
-  });
+  await useMockApiOnLocalhost(page);
 
   await page.goto("/");
   
@@ -52,6 +47,8 @@ test("Works with mask", async ({ page }) => {
 });
 
 test("No accessibility violations", async ({ page }) => {
+  await useMockApiOnLocalhost(page);
+
   await page.goto("/");
 
   await page.waitForSelector(".trivia-loading", { state: "hidden" });
@@ -60,6 +57,17 @@ test("No accessibility violations", async ({ page }) => {
 
   expect(accessibilityScanResults.violations).toEqual([]);
 });
+
+async function useMockApiOnLocalhost(page: Page) {
+  const base = (test.info().project.use?.baseURL ?? process.env.BASE_URL ?? "");
+  if (base.toLowerCase().includes("localhost")) {
+    await page.route("**/api.php**", async route => {
+      await route.fulfill({
+        body: JSON.stringify(mock),
+      });
+    });
+  }
+}
 
 async function maskEverythingBelow(page: Page, selector: string, maskId: string) {
   await page.evaluate(([selector, maskId]) => {
