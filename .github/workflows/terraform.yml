@@ -1,0 +1,43 @@
+name: terraform
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "terraform/**"
+      - ".github/workflows/terraform.yml"
+  workflow_dispatch:
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  terraform:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v4.0.1
+      - name: Terraform formatting
+        run: terraform fmt -check -recursive
+        working-directory: ./terraform
+      - name: Terraform initialization
+        run: terraform init -backend=false -input=false -lockfile=readonly
+        working-directory: ./terraform
+      - name: Terraform validation
+        run: terraform validate
+        working-directory: ./terraform
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v6.3.2
+        with:
+          tflint_version: "latest"
+          tflint_wrapper: false
+      - name: Init TFLint
+        run: tflint --init
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        working-directory: ./terraform
+      - name: Terraform linting
+        run: tflint --recursive -f compact --minimum-failure-severity notice
+        working-directory: ./terraform

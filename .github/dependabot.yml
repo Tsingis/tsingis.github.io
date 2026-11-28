@@ -25,3 +25,10 @@ updates:
       day: "wednesday"
       time: "21:00"
       timezone: "Europe/Helsinki"
+  - package-ecosystem: "terraform"
+    directory: "/terraform"
+    schedule:
+      interval: "monthly"
+      day: "wednesday"
+      time: "21:00"
+      timezone: "Europe/Helsinki"
