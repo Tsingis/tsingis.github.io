@@ -4,3 +4,13 @@ __pycache__
 node_modules
 test-results
 tsconfig.tsbuildinfo
+
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.json
+*.tfplan
+/terraform/terraform
+/terraform/terraform.exe
